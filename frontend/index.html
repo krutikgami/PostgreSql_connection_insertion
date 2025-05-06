@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PostgreSQL</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+    fieldset {
+      border: none;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+    <script>
+       
+        async function handleSubmit(){
+            const username = document.getElementById('username').value;
+        const userpassword = document.getElementById('userpassword').value;
+        const email = document.getElementById('email').value;
+        const mobileNo = document.getElementById('mobileno').value;
+
+        const data = {
+            username: String(username),
+            userpassword: String(userpassword),
+            email: String(email),
+            mobileNo: String(mobileNo)
+        }
+
+
+        
+            try {
+            const res = await fetch('http://localhost:3000/add',{
+                method : 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            const result  = await res.json();
+            console.log('Server response:', result);
+            alert('Data submitted successfully!');
+        } catch (error) {
+            console.error('Error submitting data:', error);
+            alert('Error submitting data');
+        }
+        }
+    </script>
+  <div class="container">
+    <h1>PostgreSQL Data Insertion Testing</h1>
+    <fieldset>
+      <label for="username">Username:</label>
+      <input type="text" id="username" placeholder="Enter Username" required />
+
+      <label for="userpassword">User Password:</label>
+      <input type="password" id="userpassword" placeholder="Enter Password" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter Email ID" required />
+
+      <label for="mobileno">Mobile No:</label>
+      <input type="number" id="mobileno" placeholder="Enter Mobile No." max="10" required />
+
+      <button type="submit" onclick="handleSubmit()" >Submit</button>
+    </fieldset>
+  </div>
+</body>
+</html>
