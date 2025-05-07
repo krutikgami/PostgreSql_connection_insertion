@@ -80,6 +80,9 @@
                 body: JSON.stringify(data)
             })
             const result  = await res.json();
+            if(res.ok){
+              window.location.href = 'result.html'
+            }
             console.log('Server response:', result);
             alert('Data submitted successfully!');
         } catch (error) {

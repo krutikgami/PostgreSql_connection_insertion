@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response</title>
+    
+</head>
+<body>
+    <style>
+    body{
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: aliceblue;
+    }
+    .container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+    button{
+        background-color: green;
+        color: #fff;
+        width: 100px;
+        height: 30px;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse; 
+    }
+    th, td {
+        padding: 8px;
+    }
+    </style>
+    <script>
+       async function handleFetch(){
+        const tbody = document.getElementById('insert');
+           try {
+             const res = await fetch('http://localhost:3000/data',{
+                method : 'GET',
+                headers : {
+                    'Content-Type': 'application/json'
+                }
+             })
+             const data = await res.json();
+             tbody.innerHTML = '';
+            data.forEach((val) => {
+            const tr = document.createElement('tr');
+            const td1 = document.createElement('td');
+            const td2 = document.createElement('td');
+            const td3 = document.createElement('td');
+            const td4 = document.createElement('td');
+
+            td1.textContent = val.username;
+            td2.textContent = val.userpassword;
+            td3.textContent = val.email;
+            td4.textContent = val.mobileno;
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tbody.appendChild(tr);
+         });
+             console.log("Data fetched Successfully",data);
+            }catch (error) {
+                console.log("Error Fetching the data: ",error);
+            }
+       }
+    </script>
+    <div class="container">
+        <button onclick="handleFetch()">Fetch Data</button>
+        <h1>Data of TestAdmin Database</h1>
+        <table>
+            <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th>Email</th>
+                  <th>MobileNo</th>
+                </tr>
+            </thead>
+            <tbody id="insert"></tbody>
+        </table>
+    </div>
+</body>
+</html>
